@@ -72,6 +72,8 @@ fi
 alias l='ls -lah'
 
 if [[ "$PLATFORM" == 'osx' ]]; then
+	alias git='/opt/brew/bin/git'
+
 	PATH="/opt/brew/opt/coreutils/libexec/gnubin:$PATH"
 	MANPATH="/opt/brew/opt/coreutils/libexec/gnuman:$MANPATH"	
 
@@ -82,9 +84,7 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 	#export C_INCLUDE_PATH=/opt/brew/include:$C_INCLUDE_PATH
 	export LIBPATH=/opt/brew/
 
-	export PATH="$(brew --prefix homebrew/php/php54)/bin:$PATH"
-
-	export DOCKER_HOST=tcp://localhost:4243
+	#export PATH="$(brew --prefix homebrew/php/php54)/bin:$PATH"
 
 	# Colors for folders etc.
 	export CLICOLOR=1; export LSCOLORS=ExGxFxDxCxegedabagfcec;
@@ -104,8 +104,14 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 	nvm use stable >/dev/null
 	#$(nvm use stable &) >/dev/null 2>&1
 
-	# DOCKER - boot2docker
-	export DOCKER_HOST=tcp://:2375
+	# JAVA_HOME
+	export JAVA_HOME=$(/usr/libexec/java_home -v 1.7 2>/dev/null)
+#	export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/
+#	export ANDROID_STUDIO_JDK="$STUDIO_JDK"
+
+	# Appengine Java SDK
+	APPENGINE_SDK_VERSION=1.9.31
+	export PATH=/Users/celly/.m2/repository/com/google/appengine/appengine-java-sdk/$APPENGINE_SDK_VERSION/appengine-java-sdk/appengine-java-sdk-$APPENGINE_SDK_VERSION/bin/:$PATH
 fi
 
 unset PLATFORM
