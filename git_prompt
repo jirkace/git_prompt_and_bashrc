@@ -1,0 +1,177 @@
+#. "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/../../../usr/local/bin/lscommon"
+
+## Customization
+# COLORS
+NOC="\[[0m\]"
+WHITE="\[[1m\]"
+GREY="\[[2m\]"
+UNDERLINE="\[[4m\]"
+DEFACE="\[[9m\]"
+DARK="\[[30m\]"
+RED="\[[31m\]"
+GREEN="\[[32m\]"
+YELOW="\[[33m\]"
+BLUE="\[[34m\]"
+PINK="\[[35m\]"
+AZURE="\[[36m\]"
+BDARK="\[[40m\]"
+BRED="\[[41m\]"
+BGREEN="\[[42m\]"
+BYELOW="\[[43m\]"
+BBLUE="\[[44m\]"
+BPINK="\[[45m\]"
+BAZURE="\[[46m\]"
+BWHITE="\[[7m\]"
+HDARK="\[[90m\]"
+HRED="\[[91m\]"
+HGREEN="\[[92m\]"
+HYELOW="\[[93m\]"
+HBLUE="\[[94m\]"
+HPINK="\[[95m\]"
+HAZURE="\[[96m\]"
+
+
+function create_prompt {
+
+	gitpart=""
+
+	GIT_DATA=$(git status -b --porcelain 2>/dev/null)
+
+	if [ "$?" == "0" ]; then
+
+		SYMBOL_AHEAD=$(echo -e "\u2B06 ")
+		SYMBOL_BEHIND=$(echo -e "\u2B07 ")
+		SYMBOL_STASHED="S: "
+		#SYMBOL_STASHED=$(echo -e "\u2699 ")
+		SYMBOL_MODIFIED="M: "
+		#SYMBOL_MODIFIED=$(echo -e "\u270E ")
+		SYMBOL_DELETED="D: "
+		#SYMBOL_DELETED=$(echo -e "\u2716 ")
+		SYMBOL_STAGED="S: "
+		#SYMBOL_STAGED=$(echo -e "\u2714 ")
+		SYMBOL_UNTRACKED="U: "
+		#SYMBOL_UNTRACKED=$(echo -e "\u2754 ")
+		#SYMBOL_CONFLICTED=$(echo -e "\u273C ")
+		SYMBOL_CONFLICTED=$(echo -e "\u2757 ")
+		#SYMBOL_CONFLICTED=$(echo -e "\u2620 ")
+		SYMBOL_UNCOUNTED=$(echo -e "\u2755 ")
+
+		FIRST_LINE=$(echo -e "$GIT_DATA" | head -n1)
+
+		stash=$(git stash list | wc -l)
+
+		#git status local vs remote
+		#status=$(git status | grep -e "^# Your branch is")
+		status=$(echo -e "$FIRST_LINE" | head -n1 | egrep -o "\[.*\]")
+
+		rstat=""
+		if echo $status | grep 'ahead' > /dev/null ; then
+			num=$(echo $status | egrep -o "ahead [0-9]+" | egrep -o [0-9]+)
+			rstat="$rstat ${HYELOW}${SYMBOL_AHEAD}${HRED}$num$GREEN"
+		fi
+		if echo $status | grep 'behind' > /dev/null ; then
+			num=$(echo $status | egrep -o "behind [0-9]+" | egrep -o [0-9]+)
+			rstat="$rstat ${HYELOW}${SYMBOL_BEHIND}${HRED}$num$GREEN"
+		fi
+
+		OIFS=$IFS
+		IFS=$'\n'
+
+		modified=0
+		deleted=0
+		staged=0
+		untracked=0
+		conflicts=0
+		uncounted=0
+
+
+		CONFLICT_CODES=(DD AU UD UA DU AA UU)
+		SKIP_LINE=true;
+
+		for GIT_LINE in $(echo -e "$GIT_DATA"); do
+			if $SKIP_LINE; then SKIP_LINE=false; continue; fi
+			STAT=${GIT_LINE:0:2}
+			STAT1=${STAT:1:1}
+			if [[ " ${conflictsLICT_CODES[@]} " =~ " $STAT " ]]; then ((conflicts++)); continue; fi
+			if [ "$STAT" == "??" ]; then ((untracked++)); continue; fi
+			uncountedRow=true
+			if [ "$STAT1" == "D" ]; then ((deleted++)); uncountedRow=false;
+			elif [ "$STAT1" == "M" ]; then ((modified++)); uncountedRow=false; fi
+			if [ "${STAT:0:1}" != " " ]; then ((staged++)); uncountedRow=false; fi
+			if $uncountedRow; then ((uncounted++)); fi
+		done
+
+		IFS=$OIFS
+
+		if [ $modified -gt 0 ] ; then 
+			modified="$HRED$modified$GREEN"
+		else
+			modified="$NOC$modified$GREEN"
+		fi
+
+		if [ $staged -gt 0 ] ; then 
+			staged="$RED$staged$GREEN"
+		else
+			staged="$NOC$staged$DARK$GREEN"
+		fi
+
+		if [ $deleted -gt 0 ] ; then 
+			deleted="$HRED$deleted$GREEN"
+		else
+			deleted="$NOC$deleted$GREEN"
+		fi
+
+		if [ $untracked -gt 0 ] ; then 
+			untracked=" $GREEN${SYMBOL_UNTRACKED}$YELOW$untracked$GREEN"
+		else
+			untracked=""
+		fi
+
+		if [ $conflicts -gt 0 ] ; then 
+			conflicts=" ${RED}${SYMBOL_CONFLICTED}$RED$conflicts$GREEN"
+		else
+			conflicts=""
+		fi
+
+		if [ $uncounted -gt 0 ] ; then 
+			uncounted=" $YELOW${SYMBOL_UNCOUNTED}$uncounted$GREEN"
+		else
+			uncounted=""
+		fi
+
+		if [ $stash -gt 0 ] ; then 
+			stash=" ${AZURE}${SYMBOL_STASHED}$RED$stash$GREEN"
+		else
+			stash=""
+		fi
+
+#		if repo_has_flag GITFLOW; then
+#			git=FLOW
+#                else
+			git=GIT
+#                fi
+
+		#repo=$(echo $FIRST_LINE | sed -e 's/## \(.*\)\(\.\.\..*\)*/\1/g')
+		repoR=$(echo $FIRST_LINE | sed -e 's/## \(.*\)\.\.\..*/\1/g')
+		repo=$(echo $repoR | sed -e 's/^## //g')
+		repo=$HBLUE$repo
+		if [ "$(echo $repoR | grep ^##)" != "" ]; then
+			repo="${RED}LB $repo"
+		fi
+		gitpart="$GREEN($git: $repo$GREEN | ${SYMBOL_MODIFIED}$modified ${SYMBOL_DELETED}$deleted ${SYMBOL_STAGED}$staged$untracked$conflicts$uncounted$stash$rstat) "
+
+	fi
+
+
+	if [[ $USER == "root" ]] ; then
+            COLORPS=$NOC$HRED
+    else
+            COLORPS=$NOC
+    fi
+
+#	PS1="$COLORPS\u@\h\[\033[00m\]:$HBLUE\w$gitpart$COLORPS \[\033[00m\]\$$NOC "
+
+	PS1="\n${WHITE}${HGREEN}\h${NOC}${HGREEN}[${COLORPS}\u${NOC}${HGREEN}](${NOC}${GREY}\D{%T}${NOC}${HGREEN})-(${COLORPS}\w${NOC}${HGREEN})\n$gitpart${COLORPS}->${NOC} "
+
+}
+

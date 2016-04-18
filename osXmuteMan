@@ -1,0 +1,31 @@
+- Go to terminal.
+ 
+- Write sudo nano /Library/Scripts/mute-off.sh
+ 
+- Paste:
+ 
+#!/bin/bash
+osascript -e 'set volume without output muted'
+ 
+- Press 'Ctrl + X' and press 'Y' and 'Enter'
+ 
+- Write sudo nano /Library/Scripts/mute-on.sh
+ 
+- Paste:
+ 
+#!/bin/bash
+osascript -e 'set volume with output muted'
+ 
+- Press 'Ctrl + X' and press 'Y' and 'Enter'
+ 
+- Paste this in terminal and press enter :
+ 
+sudo chmod u+x /Library/Scripts/mute-on.sh
+sudo chmod u+x /Library/Scripts/mute-off.sh
+sudo defaults write com.apple.loginwindow LogoutHook /Library/Scripts/mute-on.sh
+sudo defaults write com.apple.loginwindow LoginHook /Library/Scripts/mute-off.sh
+ 
+- If you want to remove it again write this in terminal:
+ 
+sudo defaults delete com.apple.loginwindow LoginHook
+sudo defaults delete com.apple.loginwindow LogoutHook
