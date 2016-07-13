@@ -74,6 +74,7 @@ alias l='ls -lah'
 if [[ "$PLATFORM" == 'osx' ]]; then
 	alias git='/opt/brew/bin/git'
 
+	SHELL="/opt/brew/bin/bash"
 	PATH="/opt/brew/opt/coreutils/libexec/gnubin:$PATH"
 	MANPATH="/opt/brew/opt/coreutils/libexec/gnuman:$MANPATH"	
 
