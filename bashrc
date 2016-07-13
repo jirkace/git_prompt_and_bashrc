@@ -39,6 +39,7 @@ function sshk
 		kinit -r 7d $(whoami)
 	fi
 	ssh $1.ls.intra
+	#"cat /etc/motd ; sudo -i"
 }
 function scpk
 {
