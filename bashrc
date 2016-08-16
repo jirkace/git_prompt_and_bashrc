@@ -113,7 +113,7 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 
 	# Appengine Java SDK
 	APPENGINE_SDK_VERSION=1.9.31
-	export PATH=/Users/celly/.m2/repository/com/google/appengine/appengine-java-sdk/$APPENGINE_SDK_VERSION/appengine-java-sdk/appengine-java-sdk-$APPENGINE_SDK_VERSION/bin/:$PATH
+	export PATH=/Users/celly/.m2/repository/com/google/appengine/appengine-java-sdk/$APPENGINE_SDK_VERSION/appengine-java-sdk/appengine-java-sdk-$APPENGINE_SDK_VERSION/bin:$PATH
 fi
 
 unset PLATFORM
