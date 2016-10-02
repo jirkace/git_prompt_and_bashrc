@@ -60,7 +60,7 @@ function php-cli-debug-start
 
 function php-cli-debug-stop
 {
-        export XDEBUG_CONFIG=""
+	export XDEBUG_CONFIG=""
 }
 
 # ALIASES
@@ -80,7 +80,7 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 	PATH="$BREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
 	MANPATH="$BREW_PREFIX/opt/coreutils/libexec/gnuman:$MANPATH"
 
-	export DEVELOPER_DIR="`xcode-select -print-path`"
+	export DEVELOPER_DIR="$(xcode-select -print-path)"
 
 	export PATH="/usr/pkg/bin:/usr/pkg/sbin:$BREW_PREFIX/bin:$BREW_PREFIX/sbin:$PATH"
 	export MANPATH="/usr/pkg/man:$BREW_PREFIX/share/man:$MANPATH"
@@ -104,6 +104,7 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 	# NVM
 	source $BREW_PREFIX/opt/nvm/nvm.sh #$(brew --prefix nvm)/nvm.sh
 	export NVM_DIR=$(dirname $BASH_SOURCE)/../.nvm
+	#alias node='nvm use stable >/dev/null; unalias node; node'
 	nvm use stable >/dev/null
 	#$(nvm use stable &) >/dev/null 2>&1
 
