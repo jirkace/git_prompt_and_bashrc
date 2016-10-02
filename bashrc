@@ -73,20 +73,21 @@ fi
 alias l='ls -lah'
 
 if [[ "$PLATFORM" == 'osx' ]]; then
-	alias git='/opt/brew/bin/git'
+	BREW_PREFIX=/opt/brew
+	alias git=$BREW_PREFIX/bin/git
 
-	SHELL="/opt/brew/bin/bash"
-	PATH="/opt/brew/opt/coreutils/libexec/gnubin:$PATH"
-	MANPATH="/opt/brew/opt/coreutils/libexec/gnuman:$MANPATH"	
+	SHELL="$BREW_PREFIX/bin/bash"
+	PATH="$BREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
+	MANPATH="$BREW_PREFIX/opt/coreutils/libexec/gnuman:$MANPATH"
 
 	export DEVELOPER_DIR="`xcode-select -print-path`"
 
-	export PATH=/usr/pkg/bin:/usr/pkg/sbin:/opt/brew/bin:/opt/brew/sbin:$PATH
-	export MANPATH=/usr/pkg/man:/opt/brew/share/man:$MANPATH
-	#export C_INCLUDE_PATH=/opt/brew/include:$C_INCLUDE_PATH
-	export LIBPATH=/opt/brew/
+	export PATH="/usr/pkg/bin:/usr/pkg/sbin:$BREW_PREFIX/bin:$BREW_PREFIX/sbin:$PATH"
+	export MANPATH="/usr/pkg/man:$BREW_PREFIX/share/man:$MANPATH"
+	#export C_INCLUDE_PATH=$BREW_PREFIX/include:$C_INCLUDE_PATH
+	export LIBPATH=$BREW_PREFIX/
 
-	#export PATH="$(brew --prefix homebrew/php/php54)/bin:$PATH"
+	#export PATH="$BREW_PREFIX/opt/php55/bin:$PATH" #PATH="$(brew --prefix homebrew/php/php54)/bin:$PATH"
 
 	# Colors for folders etc.
 	export CLICOLOR=1; export LSCOLORS=ExGxFxDxCxegedabagfcec;
@@ -96,12 +97,12 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 
 	# Bash completion
 #	. /etc/bash_completion
-	if [ -f $(brew --prefix)/etc/bash_completion ]; then
-		. $(brew --prefix)/etc/bash_completion
+	if [ -f $BREW_PREFIX/etc/bash_completion ]; then
+		. $BREW_PREFIX/etc/bash_completion
 	fi
 
 	# NVM
-	source $(brew --prefix nvm)/nvm.sh
+	source $BREW_PREFIX/opt/nvm/nvm.sh #$(brew --prefix nvm)/nvm.sh
 	export NVM_DIR=$(dirname $BASH_SOURCE)/../.nvm
 	nvm use stable >/dev/null
 	#$(nvm use stable &) >/dev/null 2>&1
