@@ -1,0 +1,18 @@
+#!/opt/brew/bin/bash
+if [ "$1" == "" ]; then
+	docker ps | awk '{print $NF}' | tail -n +2
+	exit
+fi
+
+ROW="$(docker ps | grep $1$)"
+PORT="$(echo $ROW | egrep -o '[0-9]+->22' | cut -d'-' -f1)"
+NAME="$(echo $ROW | awk '{print $NF}')"
+
+if [ "$PORT" = "" ]; then
+	echo No container found for name $1
+	exit -1
+fi
+
+echo Connecting to $NAME
+
+ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@localhost -p $PORT
