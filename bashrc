@@ -105,6 +105,7 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 	source $BREW_PREFIX/opt/nvm/nvm.sh #$(brew --prefix nvm)/nvm.sh
 	export NVM_DIR=$(dirname $BASH_SOURCE)/../.nvm
 	#alias node='nvm use stable >/dev/null; unalias node; node'
+	alias nvmuse='nvm use --delete-prefix'
 	nvm use --delete-prefix --lts >/dev/null
 	#$(nvm use stable &) >/dev/null 2>&1
 
