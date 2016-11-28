@@ -1,0 +1,29 @@
+#!/bin/bash
+
+drives=$(mount | grep ntfs | grep read-only)
+
+OLDIFS=$IFS; IFS=$'\n';
+for drive in $drives ; do
+	dev=$(echo $drive | awk '{print $1}')
+	mount_point=$(echo $drive | awk '{print $3}')
+
+	read -p "Remount NTFS disk $mount_point as RW?" yn
+	case $yn in
+		[Yy]* ) echo "$mount_point will be remounted as NTFS RW";;
+		* ) echo "$mount_point stay untouched"; continue;;
+	esac
+
+	printf "Checking sudo:"
+	sudo -l >/dev/null
+	if [ "$?" != "0" ]; then
+		echo " fail"
+		continue
+	fi
+	echo " ok"
+
+	diskutil unmount $mount_point
+	sudo mkdir $mount_point
+	# sudo ntfs-3g $dev $mount_point -olocal -oallow_other
+	sudo mount -t ntfs -o rw,auto,nobrowse $dev $mount_point
+done
+IFS=$OLDIFS
