@@ -1,6 +1,6 @@
 #!/bin/bash
 
 cd "$1"
-git co master
+git checkout master
 git reset --hard origin/master
 git pull
