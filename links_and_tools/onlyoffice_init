@@ -1,0 +1,28 @@
+docker create \
+    -v /var/www/onlyoffice/Data \
+    -v /var/vmail \
+    -v /etc/pki/tls/mailserver \
+    -v /var/log \
+    -v /var/lib/mysql \
+    -v /var/log/onlyoffice \
+    -v /var/www/onlyoffice/DocumentServerData \
+    --name onlyoffice_data \
+    busybox \
+    sh -c 'echo hello docker volume > /foo/testing.txt'
+
+docker run --net onlyoffice -i -t -d --restart=always --name onlyoffice-document-server \
+    --volumes-from onlyoffice_data \
+    onlyoffice/documentserver
+
+docker run --net onlyoffice --privileged -i -t -d --restart=always --name onlyoffice-mail-server \
+    -p 25:25 -p 143:143 -p 587:587 \
+    --volumes-from onlyoffice_data \
+    -h cvetler.com \
+    onlyoffice/mailserver
+
+docker run --net onlyoffice -i -t -d --restart=always --name onlyoffice-community-server \
+    -p 80:80 -p 5222:5222 -p 443:443 \
+    --volumes-from onlyoffice_data \
+    -e DOCUMENT_SERVER_PORT_80_TCP_ADDR=onlyoffice-document-server \
+    -e MAIL_SERVER_DB_HOST=onlyoffice-mail-server \
+    onlyoffice/communityserver
