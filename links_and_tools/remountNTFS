@@ -25,5 +25,6 @@ for drive in $drives ; do
 	sudo mkdir $mount_point
 	# sudo ntfs-3g $dev $mount_point -olocal -oallow_other
 	sudo mount -t ntfs -o rw,auto,nobrowse $dev $mount_point
+	open $mount_point
 done
 IFS=$OLDIFS
