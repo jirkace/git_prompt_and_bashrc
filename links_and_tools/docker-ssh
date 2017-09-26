@@ -15,4 +15,4 @@ fi
 
 echo Connecting to $NAME
 
-ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@localhost -p $PORT
+ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@localhost -p $PORT $2

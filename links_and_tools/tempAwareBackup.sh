@@ -34,7 +34,7 @@ LAST_RUNNING=false
 
 while true; do
 	printf "$(date) - "
-	if [ "$(mount | grep /Volumes/backup)" == "" ]; then
+	if [ "$(mount | grep /Volumes/backupX)" == "" ]; then
 		printf "Backup not mounted"
 	else
 		TEMP=$($getTemp)
