@@ -109,9 +109,8 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 	export NVM_DIR=$(dirname $BASH_SOURCE)/../.nvm
 	#alias node='nvm use stable >/dev/null; unalias node; node'
 	alias nvmuse='nvm use --delete-prefix'
-	#nvm use --delete-prefix --lts >/dev/null
-	nvm use --delete-prefix stable >/dev/null
-	#$(nvm use stable &) >/dev/null 2>&1
+	#nvm use --delete-prefix stable >/dev/null
+	nvm use --delete-prefix 6 >/dev/null
 
 	# JAVA_HOME
 #	export JAVA_HOME=$(/usr/libexec/java_home -v 1.7 2>/dev/null)
