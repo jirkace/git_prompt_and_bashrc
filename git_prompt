@@ -39,8 +39,10 @@ function create_prompt {
 
 	if [ "$?" == "0" ]; then
 
-		SYMBOL_AHEAD=$(echo -e "\u2B06 ")
-		SYMBOL_BEHIND=$(echo -e "\u2B07 ")
+		#SYMBOL_AHEAD=$(echo -e "\u2B06 ")
+		SYMBOL_AHEAD=$(echo -e '\xE2\xAC\x86 ')
+		#SYMBOL_BEHIND=$(echo -e "\u2B07 ")
+		SYMBOL_BEHIND=$(echo -e '\xE2\xAC\x87 ')
 		SYMBOL_STASHED="S: "
 		#SYMBOL_STASHED=$(echo -e "\u2699 ")
 		SYMBOL_MODIFIED="M: "
@@ -52,9 +54,9 @@ function create_prompt {
 		SYMBOL_UNTRACKED="U: "
 		#SYMBOL_UNTRACKED=$(echo -e "\u2754 ")
 		#SYMBOL_CONFLICTED=$(echo -e "\u273C ")
-		SYMBOL_CONFLICTED=$(echo -e "\u2757 ")
+		SYMBOL_CONFLICTED=$(echo -e '\xE2\x9D\x8e ')
 		#SYMBOL_CONFLICTED=$(echo -e "\u2620 ")
-		SYMBOL_UNCOUNTED=$(echo -e "\u2755 ")
+		SYMBOL_UNCOUNTED=$(echo -e '\xE2\x9D\x95 ')
 
 		FIRST_LINE=$(echo -e "$GIT_DATA" | head -n1)
 
