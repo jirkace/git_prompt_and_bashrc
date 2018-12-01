@@ -84,6 +84,7 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 	MANPATH="$BREW_PREFIX/opt/coreutils/libexec/gnuman:$MANPATH"
 
 	export DEVELOPER_DIR="$(xcode-select -print-path)"
+	export PATH="$DEVELOPER_DIR/usr/bin:$PATH"
 
 	export PATH="/usr/pkg/bin:/usr/pkg/sbin:$BREW_PREFIX/bin:$BREW_PREFIX/sbin:$PATH"
 	export MANPATH="/usr/pkg/man:$BREW_PREFIX/share/man:$MANPATH"
