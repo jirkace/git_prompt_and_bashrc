@@ -38,7 +38,7 @@ function sshk
 		echo TGT expired! Creating new one.
 		kinit -r 7d $(whoami)
 	fi
-	ssh $1.ls.intra
+	ssh pavel.cvetler@$1.ls.intra
 	#"cat /etc/motd ; sudo -i"
 }
 function scpk
@@ -48,7 +48,7 @@ function scpk
 		echo TGT expired! Creating new one.
 		kinit -r 7d $(whoami)
 	fi
-	scp $1 $(echo $2 | sed -e "s/://g").ls.intra:
+	scp $1 pavel.cvetler@$(echo $2 | sed -e "s/://g").ls.intra:
 }
 fi
 
@@ -84,7 +84,7 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 	MANPATH="$BREW_PREFIX/opt/coreutils/libexec/gnuman:$MANPATH"
 
 	export DEVELOPER_DIR="$(xcode-select -print-path)"
-	export PATH="$DEVELOPER_DIR/usr/bin:$PATH"
+	#export PATH="$DEVELOPER_DIR/usr/bin:$PATH"
 
 	export PATH="/usr/pkg/bin:/usr/pkg/sbin:$BREW_PREFIX/bin:$BREW_PREFIX/sbin:$PATH"
 	export MANPATH="/usr/pkg/man:$BREW_PREFIX/share/man:$MANPATH"
