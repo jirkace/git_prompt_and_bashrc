@@ -36,7 +36,8 @@ function sshk
 	klist -s
 	if [ "$?" != "0" ]; then
 		echo TGT expired! Creating new one.
-		kinit -r 7d $(whoami)
+		kinit -r 7d pavel.cvetler
+#$(whoami)
 	fi
 	ssh pavel.cvetler@$1.ls.intra
 	#"cat /etc/motd ; sudo -i"
@@ -46,7 +47,8 @@ function scpk
 	klist -s
 	if [ "$?" != "0" ]; then
 		echo TGT expired! Creating new one.
-		kinit -r 7d $(whoami)
+		kinit -r 7d pavel.cvetler
+#$(whoami)
 	fi
 	scp $1 pavel.cvetler@$(echo $2 | sed -e "s/://g").ls.intra:
 }
@@ -129,8 +131,8 @@ unset PLATFORM
 # GIT bash prompt
 if [ -f $(dirname $BASH_SOURCE)/git_prompt ]; then
 	. $(dirname $BASH_SOURCE)/git_prompt
-	#export PROMPT_COMMAND="create_prompt"
-	export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }create_prompt"
+	export PROMPT_COMMAND="create_prompt"
+	#export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }create_prompt"
 fi
 
 # function _update_ps1() { export PS1="$(/Users/celly/tmp/powerline-shell/powerline-shell.py $? 2> /dev/null)"; }
