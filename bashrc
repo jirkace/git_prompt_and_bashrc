@@ -39,7 +39,7 @@ function sshk
 		kinit -r 7d pavel.cvetler
 #$(whoami)
 	fi
-	ssh pavel.cvetler@$1.ls.intra
+	ssh pavel.cvetler@$1.ls.intra "$2"
 	#"cat /etc/motd ; sudo -i"
 }
 function scpk
