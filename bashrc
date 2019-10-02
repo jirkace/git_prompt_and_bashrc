@@ -75,6 +75,8 @@ fi
 alias l='ls -lah'
 
 if [[ "$PLATFORM" == 'osx' ]]; then
+	CELLY_HOME=/Users/celly
+
 	BREW_PREFIX=/opt/brew
 	alias git=$BREW_PREFIX/bin/git
 
@@ -124,6 +126,9 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 	# Appengine Java SDK
 	APPENGINE_SDK_VERSION=1.9.31
 	export PATH=/Users/celly/.m2/repository/com/google/appengine/appengine-java-sdk/$APPENGINE_SDK_VERSION/appengine-java-sdk/appengine-java-sdk-$APPENGINE_SDK_VERSION/bin:$PATH
+
+	# GO
+	export GOPATH=${CELLY_HOME}/go
 fi
 
 unset PLATFORM
