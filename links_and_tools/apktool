@@ -43,6 +43,7 @@ cd "${oldwd}"
 
 
 jarfile=apktool.jar
+jarfile=apktool_2.4.1.jar
 libdir="$progdir"
 if [ ! -r "$libdir/$jarfile" ]
 then
