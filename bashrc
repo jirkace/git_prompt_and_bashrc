@@ -110,12 +110,10 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 	fi
 
 	# NVM
-	source $BREW_PREFIX/opt/nvm/nvm.sh #$(brew --prefix nvm)/nvm.sh
-	export NVM_DIR=$(dirname $BASH_SOURCE)/../.nvm
-	#alias node='nvm use stable >/dev/null; unalias node; node'
-	alias nvmuse='nvm use --delete-prefix'
-	#nvm use --delete-prefix stable >/dev/null
-	nvm use --delete-prefix 6 >/dev/null
+	export NVM_DIR=$(dirname $(dirname $BASH_SOURCE))/.nvm
+	[ -s "$BREW_PREFIX/opt/nvm/nvm.sh" ] && . "$BREW_PREFIX/opt/nvm/nvm.sh"  # This loads nvm
+	[ -s "$BREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && . "$BREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+	nvm use node
 
 	# JAVA_HOME
 #	export JAVA_HOME=$(/usr/libexec/java_home -v 1.7 2>/dev/null)
