@@ -156,5 +156,3 @@ fi
 #	}
 #	PROMPT_COMMAND="update_terminal_cwd; $PROMPT_COMMAND"
 #fi
-
-#[[ -f ~/.nvm/nvm.sh ]] && source ~/.nvm/nvm.sh # This loads NVM
