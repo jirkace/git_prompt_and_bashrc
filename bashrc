@@ -9,6 +9,9 @@ esac
 HISTCONTROL=ignoredups:ignorespace
 
 export PATH=~/bin:$PATH
+if [[ -d ${HOME}/Library/Developer/Xcode/usr/bin ]]; then
+        PATH="${HOME}/Library/Developer/Xcode/usr/bin:${PATH}"
+fi
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -78,7 +81,7 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 	MAIN_HOME=$(dirname $(dirname $BASH_SOURCE))
 
 	BREW_PREFIX=/opt/brew
-	alias git=$BREW_PREFIX/bin/git
+	# alias git=$BREW_PREFIX/bin/git
 
 	alias j2objc=/Users/celly/j2objc/j2objc
 	alias j2objcc=/Users/celly/j2objc/j2objcc
