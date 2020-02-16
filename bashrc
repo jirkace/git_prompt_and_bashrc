@@ -75,7 +75,7 @@ fi
 alias l='ls -lah'
 
 if [[ "$PLATFORM" == 'osx' ]]; then
-	CELLY_HOME=/Users/celly
+	MAIN_HOME=$(dirname $(dirname $BASH_SOURCE))
 
 	BREW_PREFIX=/opt/brew
 	alias git=$BREW_PREFIX/bin/git
@@ -110,7 +110,7 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 	fi
 
 	# NVM
-	export NVM_DIR=$(dirname $(dirname $BASH_SOURCE))/.nvm
+	export NVM_DIR=${MAIN_HOME}/.nvm
 	[ -s "$BREW_PREFIX/opt/nvm/nvm.sh" ] && . "$BREW_PREFIX/opt/nvm/nvm.sh"  # This loads nvm
 	[ -s "$BREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && . "$BREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 	nvm use node
@@ -126,7 +126,7 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 	export PATH=/Users/celly/.m2/repository/com/google/appengine/appengine-java-sdk/$APPENGINE_SDK_VERSION/appengine-java-sdk/appengine-java-sdk-$APPENGINE_SDK_VERSION/bin:$PATH
 
 	# GO
-	export GOPATH=${CELLY_HOME}/go
+	export GOPATH=${MAIN_HOME}/go
 fi
 
 unset PLATFORM
