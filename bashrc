@@ -79,6 +79,7 @@ alias l='ls -lah'
 
 if [[ "$PLATFORM" == 'osx' ]]; then
 	MAIN_HOME=$(dirname $(dirname $BASH_SOURCE))
+	export GEM_HOME=$MAIN_HOME/.gem
 
 	BREW_PREFIX=/opt/brew
 	# alias git=$BREW_PREFIX/bin/git
@@ -93,6 +94,7 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 	export DEVELOPER_DIR="$(xcode-select -print-path)"
 	#export PATH="$DEVELOPER_DIR/usr/bin:$PATH"
 
+	export PATH="$GEM_HOME/bin:$GEM_HOME/ruby/2.6.0/bin:$PATH"
 	export PATH="/usr/pkg/bin:/usr/pkg/sbin:$BREW_PREFIX/bin:$BREW_PREFIX/sbin:$PATH"
 	export MANPATH="/usr/pkg/man:$BREW_PREFIX/share/man:$MANPATH"
 	#export C_INCLUDE_PATH=$BREW_PREFIX/include:$C_INCLUDE_PATH
@@ -159,3 +161,6 @@ fi
 #	}
 #	PROMPT_COMMAND="update_terminal_cwd; $PROMPT_COMMAND"
 #fi
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
