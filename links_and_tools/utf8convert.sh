@@ -1,0 +1,1 @@
+iconv -f WINDOWS-1250 -t UTF-8 "$1" > "$1".utf8
