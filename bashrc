@@ -143,6 +143,10 @@ if [ -f $(dirname $BASH_SOURCE)/git_prompt ]; then
 	#export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }create_prompt"
 fi
 
+if [ "$TERM_PROGRAM" == "vscode" ]; then
+	export PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007"';
+fi
+
 # function _update_ps1() { export PS1="$(/Users/celly/tmp/powerline-shell/powerline-shell.py $? 2> /dev/null)"; }
 # if [ "$TERM" != "linux" ]; then
 # 	PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
