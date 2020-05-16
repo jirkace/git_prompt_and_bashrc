@@ -30,7 +30,7 @@ shopt -s checkwinsize
 # FUNCTIONS
 function mkcd
 {
-	mkdir $1 && cd $1
+	mkdir "$1" && cd "$1"
 }
 
 if [ "$(which kinit)" != "" ]; then
