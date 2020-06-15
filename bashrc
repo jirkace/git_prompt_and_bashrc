@@ -4,21 +4,16 @@ case "$(uname)" in
 	*) PLATFORM='unknown';;
 esac
 
-# don't put duplicate lines in the history. See bash(1) for more options
-# ... or force ignoredups and ignorespace
-HISTCONTROL=ignoredups:ignorespace
-
 export PATH=~/bin:$PATH
 if [[ -d ${HOME}/Library/Developer/Xcode/usr/bin ]]; then
         PATH="${HOME}/Library/Developer/Xcode/usr/bin:${PATH}"
 fi
 
-# append to the history file, don't overwrite it
-shopt -s histappend
-
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=100000
+HISTFILESIZE=100000
+shopt -s histappend # append to the history file, don't overwrite it
+HISTCONTROL=ignoredups:ignorespace # append to history, don't overwrite it
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -142,6 +137,10 @@ if [ -f $(dirname $BASH_SOURCE)/git_prompt ]; then
 	export PROMPT_COMMAND="create_prompt"
 	#export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }create_prompt"
 fi
+
+# Save and reload the history after each command finishes
+# export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
 if [ "$TERM_PROGRAM" == "vscode" ]; then
 	export PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007"';
