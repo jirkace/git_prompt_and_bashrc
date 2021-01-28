@@ -73,6 +73,10 @@ fi
 alias l='ls -lah'
 
 if [[ "$PLATFORM" == 'osx' ]]; then
+#	export LDFLAGS="-L/opt/brew/opt/zlib/lib"
+#	export CPPFLAGS="-I/opt/brew/opt/zlib/include"
+#	export PKG_CONFIG_PATH="/opt/brew/opt/zlib/lib/pkgconfig"
+
 	MAIN_HOME=$(dirname $(dirname $BASH_SOURCE))
 	export GEM_HOME=$MAIN_HOME/.gem
 
@@ -127,6 +131,10 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 
 	# GO
 	export GOPATH=${MAIN_HOME}/go
+
+	# DOCKER
+	[ -s "/Applications/Docker.app/Contents/Resources/etc/docker-compose.bash-completion" ] && . "/Applications/Docker.app/Contents/Resources/etc/docker-compose.bash-completion"
+	[ -s "/Applications/Docker.app/Contents/Resources/etc/docker.bash-completion" ] && . "/Applications/Docker.app/Contents/Resources/etc/docker.bash-completion"
 fi
 
 unset PLATFORM
