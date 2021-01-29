@@ -120,10 +120,18 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 	nvm use node
 
 	# JAVA_HOME
-#	export JAVA_HOME=$(/usr/libexec/java_home -v 1.7 2>/dev/null)
-	export JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null)
-#	export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/
-#	export ANDROID_STUDIO_JDK="$STUDIO_JDK"
+	export JAVA_8_HOME=$(/usr/libexec/java_home -v1.8)
+	export JAVA_11_HOME=$(/usr/libexec/java_home -v11)
+
+	alias java8='export JAVA_HOME=$JAVA_8_HOME'
+	alias java11='export JAVA_HOME=$JAVA_11_HOME'
+
+	export JAVA_HOME=$JAVA_11_HOME
+
+##	export JAVA_HOME=$(/usr/libexec/java_home -v 1.7 2>/dev/null)
+#	export JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null)
+##	export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/
+##	export ANDROID_STUDIO_JDK="$STUDIO_JDK"
 
 	# Appengine Java SDK
 	APPENGINE_SDK_VERSION=1.9.31
