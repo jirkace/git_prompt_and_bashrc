@@ -86,6 +86,8 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 	alias j2objc=/Users/celly/j2objc/j2objc
 	alias j2objcc=/Users/celly/j2objc/j2objcc
 
+	PATH="/Users/celly/.git_prompt_and_bashrc/links_and_tools:$PATH"
+
 	SHELL="$BREW_PREFIX/bin/bash"
 	PATH="$BREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
 	MANPATH="$BREW_PREFIX/opt/coreutils/libexec/gnuman:$MANPATH"
