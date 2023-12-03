@@ -80,7 +80,7 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 	MAIN_HOME=$(dirname $(dirname $BASH_SOURCE))
 	export GEM_HOME=$MAIN_HOME/.gem
 
-	BREW_PREFIX=/opt/brew
+	BREW_PREFIX=/opt/homebrew
 	# alias git=$BREW_PREFIX/bin/git
 
 	alias j2objc=/Users/celly/j2objc/j2objc
