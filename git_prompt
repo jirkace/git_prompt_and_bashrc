@@ -34,10 +34,15 @@ HAZURE="\[[96m\]"
 function create_prompt {
 
 	gitpart=""
+	GIT_DATA=""
 
-	GIT_DATA=$(git status -b --porcelain 2>/dev/null)
+	if [ "$(git config --get prompt.hide)" != "true" ]; then
+		GIT_DATA=$(git status -b --porcelain 2>/dev/null)
+	else
+		git rev-parse --is-inside-work-tree >/dev/null 2>&1 && gitpart="$GREEN(GIT: prompt.hide = true) "
+	fi
 
-	if [ "$?" == "0" ]; then
+	if [ "$GIT_DATA" != "" ]; then
 
 		#SYMBOL_AHEAD=$(echo -e "\u2B06 ")
 		SYMBOL_AHEAD=$(echo -e '\xE2\xAC\x86 ')
