@@ -183,7 +183,10 @@ function create_prompt {
 
 #	PS1="$COLORPS\u@\h\[\033[00m\]:$HBLUE\w$gitpart$COLORPS \[\033[00m\]\$$NOC "
 
-	PS1="\n${WHITE}${HGREEN}\h${NOC}${HGREEN}[${COLORPS}\u${NOC}${HGREEN}](${NOC}${GREY}\D{%T}${NOC}${HGREEN})$venv_part-(${COLORPS}\w${NOC}${HGREEN})\n$gitpart${COLORPS}->${NOC} "
+source "/home/linuxbrew/.linuxbrew/opt/kube-ps1/share/kube-ps1.sh"
+
+	PS1="\n${WHITE}${HGREEN}\h${NOC}${HGREEN}[${COLORPS}\u${NOC}${HGREEN}](${NOC}${GREY}\D{%T}${NOC}${HGREEN})$venv_part-(${COLORPS}\w${NOC}${HGREEN}) $(kube_ps1) \n$gitpart${COLORPS}->${NOC} "
+
 
 }
 
