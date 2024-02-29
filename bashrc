@@ -34,10 +34,10 @@ function sshk
 	klist -s
 	if [ "$?" != "0" ]; then
 		echo TGT expired! Creating new one.
-		kinit -r 7d pavel.cvetler
+		kinit -r 7d jiri.cerny
 #$(whoami)
 	fi
-	ssh pavel.cvetler@$1.ls.intra "$2"
+	ssh jiri.cerny@$1.ls.intra "$2"
 	#"cat /etc/motd ; sudo -i"
 }
 function scpk
@@ -45,10 +45,10 @@ function scpk
 	klist -s
 	if [ "$?" != "0" ]; then
 		echo TGT expired! Creating new one.
-		kinit -r 7d pavel.cvetler
+		kinit -r 7d jiri.cerny
 #$(whoami)
 	fi
-	scp $1 pavel.cvetler@$(echo $2 | sed -e "s/://g").ls.intra:
+	scp $1 jiri.cerny@$(echo $2 | sed -e "s/://g").ls.intra:
 }
 fi
 
