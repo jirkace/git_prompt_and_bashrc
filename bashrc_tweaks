@@ -1,0 +1,107 @@
+###
+### Sharing history between console windows
+###
+# Avoid duplicates
+export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
+export HISTSIZE=100000                   # big big history
+export HISTFILESIZE=100000               # big big history
+shopt -s histappend                      # append to history, don't overwrite it
+# When the shell exits, append to the history file instead of overwriting it
+shopt -s histappend
+
+# After each command, append to the history file and reread it
+PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
+###
+### End of sharing history
+###
+
+# https://krew.sigs.k8s.io/docs/user-guide/setup/install/
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+# https://github.com/bigH/git-fuzzy
+export PATH="/w/tools/git-fuzzy/bin:$PATH"
+
+if [ -f $HOME/.kubectl_aliases ]; then
+    . $HOME/.kubectl_aliases
+fi
+
+source <(kubectl completion bash)
+
+
+###
+### Autocomplete for servers
+### https://wiki.livesport.eu/wiki/LAK_-_LDAP_a_Kerberos/
+###
+ssh_func () {
+  local domain="$1"
+  local server="$2"
+  if klist -s; then
+    ssh -l jiri.cerny "$server.$domain"
+  else
+    if klist 2>&1 | grep -q 'krbtgt/LIVESPORT.EU@LIVESPORT.EU'; then
+      echo "TGT expired."
+    else
+      echo "TGT is not obtained."
+    fi
+    lskinit
+    if klist -s; then
+      ssh -l jiri.cerny "$server.$domain"
+    else
+      echo "TGT wasn't obtain."
+    fi
+  fi
+}
+
+ssa () {
+	ssh_func srv.lsoffice.cz "$1"
+}
+
+sss () {
+	ssh_func ls.intra "$1"
+}
+
+sst () {
+	ssh_func tt2.lssrv.tech "$1"
+}
+
+
+# ls.intra completion
+_ssh_servers()
+{
+local cur prev
+COMPREPLY=()
+cur="${COMP_WORDS[COMP_CWORD]}"
+prev="${COMP_WORDS[COMP_CWORD-1]}"
+local servers=$(dig -4 ls.intra axfr @ns.lsoffice.cz | grep "ls.intra" | awk '{ sub(/\.ls\.intra\.$/,"",$1) ; print $1 }')
+COMPREPLY=($(compgen -W "${servers}" -- ${cur}))
+return 0
+}
+complete -F _ssh_servers sss
+
+# srv.lsoffice.cz completion
+_ssha_servers()
+{
+local cur prev
+COMPREPLY=()
+cur="${COMP_WORDS[COMP_CWORD]}"
+prev="${COMP_WORDS[COMP_CWORD-1]}"
+local servers=$(dig -4 srv.lsoffice.cz axfr @ns.lsoffice.cz | grep "srv.lsoffice.cz" | grep -v "^*" | awk '{ sub(/\.srv\.lsoffice\.cz\.$/,"",$1) ; print $1 }')
+COMPREPLY=($(compgen -W "${servers}" -- ${cur}))
+return 0
+}
+complete -F _ssha_servers ssa
+
+# lssrv.tech completion
+_ssh_tt2_servers()
+{
+local cur prev
+COMPREPLY=()
+cur="${COMP_WORDS[COMP_CWORD]}"
+prev="${COMP_WORDS[COMP_CWORD-1]}"
+local servers=$(dig -4 tt2.lssrv.tech axfr @ns.lsoffice.cz | grep "tt2.lssrv.tech" | awk '{ sub(/\.tt2\.lssrv\.tech\.$/,"",$1) ; print $1 }')
+###local servers=$(dig -4 tt2.lssrv.tech axfr @ns.lsoffice.cz | grep "tt2.lssrv.tech" )
+COMPREPLY=($(compgen -W "${servers}" -- ${cur}))
+return 0
+}
+complete -F _ssh_tt2_servers sst
+

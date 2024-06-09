@@ -32,7 +32,7 @@ HAZURE="\[[96m\]"
 
 
 function create_prompt {
-
+source "/home/linuxbrew/.linuxbrew/opt/kube-ps1/share/kube-ps1.sh"
 	gitpart=""
 	GIT_DATA=""
 
@@ -181,11 +181,10 @@ function create_prompt {
 		venv_part="-[${HRED}$(basename $VIRTUAL_ENV)${NOC}${HGREEN}]"
 	fi
 
-#	PS1="$COLORPS\u@\h\[\033[00m\]:$HBLUE\w$gitpart$COLORPS \[\033[00m\]\$$NOC "
+	KUBE_PS1_CTX_COLOR=yellow
+	KUBE_PS1=$(kube_ps1)
 
-source "/home/linuxbrew/.linuxbrew/opt/kube-ps1/share/kube-ps1.sh"
-
-	PS1="\n${WHITE}${HGREEN}\h${NOC}${HGREEN}[${COLORPS}\u${NOC}${HGREEN}](${NOC}${GREY}\D{%T}${NOC}${HGREEN})$venv_part-(${COLORPS}\w${NOC}${HGREEN}) $(kube_ps1) \n$gitpart${COLORPS}->${NOC} "
+	PS1="\n${WHITE}${HGREEN}\h${NOC}${HGREEN}[${COLORPS}\u${NOC}${HGREEN}](${NOC}${GREY}\D{%T}${NOC}${HGREEN})$venv_part-(${COLORPS}\w${NOC}${HGREEN}) ${NOC}${KUBE_PS1} \n$gitpart${COLORPS}->${NOC} "
 
 
 }

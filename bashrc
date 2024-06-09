@@ -72,80 +72,6 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 alias l='ls -lah'
 
-if [[ "$PLATFORM" == 'osx' ]]; then
-#	export LDFLAGS="-L/opt/brew/opt/zlib/lib"
-#	export CPPFLAGS="-I/opt/brew/opt/zlib/include"
-#	export PKG_CONFIG_PATH="/opt/brew/opt/zlib/lib/pkgconfig"
-
-	MAIN_HOME=$(dirname $(dirname $BASH_SOURCE))
-	export GEM_HOME=$MAIN_HOME/.gem
-
-	BREW_PREFIX=/opt/homebrew
-	# alias git=$BREW_PREFIX/bin/git
-
-	alias j2objc=/Users/celly/j2objc/j2objc
-	alias j2objcc=/Users/celly/j2objc/j2objcc
-
-	PATH="/Users/celly/.git_prompt_and_bashrc/links_and_tools:$PATH"
-
-	SHELL="$BREW_PREFIX/bin/bash"
-	PATH="$BREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
-	MANPATH="$BREW_PREFIX/opt/coreutils/libexec/gnuman:$MANPATH"
-
-	export DEVELOPER_DIR="$(xcode-select -print-path)"
-	#export PATH="$DEVELOPER_DIR/usr/bin:$PATH"
-
-	export PATH="$GEM_HOME/bin:$GEM_HOME/ruby/2.6.0/bin:$PATH"
-	export PATH="/usr/pkg/bin:/usr/pkg/sbin:$BREW_PREFIX/bin:$BREW_PREFIX/sbin:$PATH"
-	export MANPATH="/usr/pkg/man:$BREW_PREFIX/share/man:$MANPATH"
-	#export C_INCLUDE_PATH=$BREW_PREFIX/include:$C_INCLUDE_PATH
-	export LIBPATH=$BREW_PREFIX/
-
-	#export PATH="$BREW_PREFIX/opt/php55/bin:$PATH" #PATH="$(brew --prefix homebrew/php/php54)/bin:$PATH"
-
-	# Colors for folders etc.
-	export CLICOLOR=1; export LSCOLORS=ExGxFxDxCxegedabagfcec;
-
-	# ALIASES
-	alias sublime='open -a Sublime\ Text'
-
-	# Bash completion
-#	. /etc/bash_completion
-	if [ -f $BREW_PREFIX/etc/bash_completion ]; then
-		. $BREW_PREFIX/etc/bash_completion
-	fi
-
-	# NVM
-	export NVM_DIR=${MAIN_HOME}/.nvm
-	[ -s "$BREW_PREFIX/opt/nvm/nvm.sh" ] && . "$BREW_PREFIX/opt/nvm/nvm.sh"  # This loads nvm
-	[ -s "$BREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && . "$BREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-	nvm use node
-
-	# JAVA_HOME
-	export JAVA_8_HOME=$(/usr/libexec/java_home -v1.8)
-	export JAVA_11_HOME=$(/usr/libexec/java_home -v11)
-
-	alias java8='export JAVA_HOME=$JAVA_8_HOME'
-	alias java11='export JAVA_HOME=$JAVA_11_HOME'
-
-	export JAVA_HOME=$JAVA_11_HOME
-
-##	export JAVA_HOME=$(/usr/libexec/java_home -v 1.7 2>/dev/null)
-#	export JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null)
-##	export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/
-##	export ANDROID_STUDIO_JDK="$STUDIO_JDK"
-
-	# Appengine Java SDK
-	APPENGINE_SDK_VERSION=1.9.31
-	export PATH=/Users/celly/.m2/repository/com/google/appengine/appengine-java-sdk/$APPENGINE_SDK_VERSION/appengine-java-sdk/appengine-java-sdk-$APPENGINE_SDK_VERSION/bin:$PATH
-
-	# GO
-	export GOPATH=${MAIN_HOME}/go
-
-	# DOCKER
-	[ -s "/Applications/Docker.app/Contents/Resources/etc/docker-compose.bash-completion" ] && . "/Applications/Docker.app/Contents/Resources/etc/docker-compose.bash-completion"
-	[ -s "/Applications/Docker.app/Contents/Resources/etc/docker.bash-completion" ] && . "/Applications/Docker.app/Contents/Resources/etc/docker.bash-completion"
-fi
 
 unset PLATFORM
 
@@ -164,24 +90,12 @@ if [ "$TERM_PROGRAM" == "vscode" ]; then
 	export PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007"';
 fi
 
-# function _update_ps1() { export PS1="$(/Users/celly/tmp/powerline-shell/powerline-shell.py $? 2> /dev/null)"; }
-# if [ "$TERM" != "linux" ]; then
-# 	PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-# fi
-
-# Tell the terminal about the working directory at each prompt.
-#if [ "$TERM_PROGRAM" == "Apple_Terminal" ] && [ -z "$INSIDE_EMACS" ]; then
-#	update_terminal_cwd() {
-#		# Identify the directory using a "file:" scheme URL,
-#		# including the host name to disambiguate local vs.
-#		# remote connections. Percent-escape spaces.
-#		local SEARCH=' '
-#		local REPLACE='%20'
-#		local PWD_URL="file://$HOSTNAME${PWD//$SEARCH/$REPLACE}"
-#		printf '\e]7;%s\a' "$PWD_URL"
-#	}
-#	PROMPT_COMMAND="update_terminal_cwd; $PROMPT_COMMAND"
-#fi
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
+
+# include .bashrc_tweaks if it exists
+if [ -f $HOME/.bashrc_tweaks ]; then
+    . $HOME/.bashrc_tweaks
+fi
+
