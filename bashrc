@@ -94,8 +94,5 @@ if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
 
-# include .bashrc_tweaks if it exists
-if [ -f $HOME/.bashrc_tweaks ]; then
-    . $HOME/.bashrc_tweaks
-fi
+source $(dirname $BASH_SOURCE)/bashrc_tweaks
 
