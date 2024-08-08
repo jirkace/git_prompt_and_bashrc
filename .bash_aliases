@@ -29,9 +29,6 @@ alias editzkrat='mcedit /w/git_prompt_and_bashrc/.bash_aliases'
 alias audit='git audit -riu "$(git config user.name)"'
 
 
-export KRB5_CONFIG=/home/jiri.cerny/.krb5.conf
-export KRB5CCNAME=/home/jiri.cerny/.krb5.cache
-#alias lskinit='/usr/bin/kinit -r 7d jiri.cerny'
 alias lskinit='op --account "livesport.1password.eu" read "op://Private/LDAP/password" | /usr/bin/kinit -r 7d jiri.cerny'
 
 alias a='eval $(ssh-agent) ; ssh-add ~/.ssh/id_rsa'

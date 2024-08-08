@@ -97,3 +97,6 @@ fi
 source $(dirname $BASH_SOURCE)/bashrc_tweaks
 source $(dirname $BASH_SOURCE)/.kubectl_aliases
 source $(dirname $BASH_SOURCE)/.bash_aliases
+
+export KRB5_CONFIG=$(dirname $BASH_SOURCE)/.krb5.conf
+export KRB5CCNAME=$(dirname $BASH_SOURCE)/.krb5.cache
