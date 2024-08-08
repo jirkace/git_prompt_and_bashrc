@@ -95,4 +95,5 @@ if command -v pyenv 1>/dev/null 2>&1; then
 fi
 
 source $(dirname $BASH_SOURCE)/bashrc_tweaks
-
+source $(dirname $BASH_SOURCE)/.kubectl_aliases
+source $(dirname $BASH_SOURCE)/.bash_aliases

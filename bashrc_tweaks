@@ -21,12 +21,7 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 # https://github.com/bigH/git-fuzzy
 export PATH="/w/tools/git-fuzzy/bin:$PATH"
 
-if [ -f $HOME/.kubectl_aliases ]; then
-    . $HOME/.kubectl_aliases
-fi
-
 source <(kubectl completion bash)
-
 
 ###
 ### Autocomplete for servers
