@@ -27,6 +27,9 @@ source <(kubectl completion bash)
 ### Autocomplete for servers
 ### https://wiki.livesport.eu/wiki/LAK_-_LDAP_a_Kerberos/
 ###
+
+alias lskinit='op --account "livesport.1password.eu" read "op://Private/LDAP/password" | /usr/bin/kinit -r 7d jiri.cerny'
+
 ssh_func () {
   local domain="$1"
   local server="$2"

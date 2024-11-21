@@ -29,8 +29,6 @@ alias editzkrat='mcedit /w/git_prompt_and_bashrc/.bash_aliases'
 alias audit='git audit -riu "$(git config user.name)"'
 
 
-alias lskinit='op --account "livesport.1password.eu" read "op://Private/LDAP/password" | /usr/bin/kinit -r 7d jiri.cerny'
-
 alias a='eval $(ssh-agent) ; ssh-add ~/.ssh/id_rsa'
 
 alias tailf='tail -f'
